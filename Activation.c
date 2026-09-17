@@ -41,16 +41,3 @@ int derivative_test_soft_sign() {
     }
     return 0;
 }
-int main() {
-    if (test_soft_sign()==0) {
-        printf("tests for soft_sign have succeeded\n");
-    }
-    if (derivative_test_soft_sign()==0) {
-        printf("tests for soft_sign derivative have succeeded\n");
-    }
-    double x;
-    printf("Enter the value of x: ");
-    scanf("%lf", &x);
-    printf("the soft sign function is %lf\n", soft_sign(x));
-    printf("the derivative function is %lf\n", soft_sign_derivative(x));
-}
