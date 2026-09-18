@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <math.h>
+#include <stdbool.h>
+
+
+
+// check if a floating-point number is practically zero
+bool is_zero(double x) {
+    return fabs(x) < 1e-9;
+}
+
+// main function
+double sigmweight(double x) {
+    return x / (1.0 + exp(-x));
+}
+
+double sigmweight_derivative(double x) {
+    double exp_nx = exp(-x);
+    double denom = 1.0 + exp_nx;
+    return (1.0 + (x + 1.0) * exp_nx) / (denom * denom);
+}
+
+double numerical_derivative(double x, double h) {
+    return (sigmweight(x + h) - sigmweight(x - h)) / (2.0 * h);
+}
+
+
+
+// TESTS
+
+// Test the main function
+int test_sigmweight() {
+    if (!is_zero(sigmweight(0.0))) {
+        printf("Test failed: sigmweight(0.0) should be 0.0\n");
+        return 1;
+    }
+
+    if (!is_zero(sigmweight(1.0) - (1.0 / (1.0 + exp(-1.0))))) {
+        printf("Test failed: sigmweight(1.0) is incorrect\n");
+        return 1;
+    }
+
+    if (!is_zero(sigmweight(-1.0) - (-1.0 / (1.0 + exp(1.0))))) {
+        printf("Test failed: sigmweight(-1.0) is incorrect\n");
+        return 1;
+    }
+
+    return 0;
+}
+
+// Test the derivative
+int test_sigmweight_derivative() {
+    double h = 1e-5;
+    
+    if (!is_zero(sigmweight_derivative(0.0) - 0.5)) {
+        printf("Test failed: sigmweight_derivative(0.0) should be 0.5\n");
+        return 1;
+    }
+
+    if (!is_zero(sigmweight_derivative(1.0) - numerical_derivative(1.0, h))) {
+        printf("Test failed: sigmweight_derivative(1.0) does not match numerical derivative\n");
+        return 1;
+    }
+
+    if (!is_zero(sigmweight_derivative(-1.0) - numerical_derivative(-1.0, h))) {
+        printf("Test failed: sigmweight_derivative(-1.0) does not match numerical derivative\n");
+        return 1;
+    }
+
+    return 0;
+}
+
+int main() {
+    // Запускаємо обидва тести
+    if (test_sigmweight() == 0 && test_sigmweight_derivative() == 0) {
+        printf("All tests passed successfully!\n");
+    } else {
+        printf("Some tests failed. Check the output above.\n");
+    }
+    return 0;
+}
