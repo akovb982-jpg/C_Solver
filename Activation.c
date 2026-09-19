@@ -42,16 +42,8 @@ int test_arctan(){
     
     if(!is_zero(arctan(1.0) - M_PI/4)){
         printf("Test failed: arctan(1.0) should be approximately π/4\n");
-#include <stdio.h>
-#include <math.h>
-#include <stdbool.h>
 
 
-
-// check if a floating-point number is practically zero
-bool is_zero(double x) {
-    return fabs(x) < 1e-9;
-}
 
 // main function
 double sigmweight(double x) {
@@ -121,12 +113,8 @@ int main() {
     } else {
         printf("Some tests failed. Check the output above.\n");
     }
-#include <math.h>
-#include <stdio.h>
-#include <stdbool.h>
-bool iszero(double x) {
-    return fabs(x) < 1e-9;
-}
+
+
 double soft_sign(double x) {
     return x/(1+fabs(x));
 }
@@ -135,15 +123,15 @@ double soft_sign_derivative(double x) {
     return (soft_sign(x+h)-soft_sign(x-h))/(2*h);
 }
 int test_soft_sign() {
-    if (!iszero(soft_sign(0))) {
+    if (!is_zero(soft_sign(0))) {
         printf("test for soft_sign has failed\n");
         return 1;
     }
-    if (!iszero(soft_sign(1)-0.5)) {
+    if (!is_zero(soft_sign(1)-0.5)) {
         printf("test for soft_sign has failed\n");
         return 1;
     }
-    if (!iszero(soft_sign(-1)+0.5)) {
+    if (!is_zero(soft_sign(-1)+0.5)) {
         printf("test for soft_sign has failed\n");
         return 1;
     }
@@ -162,15 +150,15 @@ int test_arctan_derivative(){
     if(!is_zero(arctan_derivative(-1.0) - 0.5)){
         printf("Test failed: arctan_derivative(-1.0) should be approximately 0.5\n");
 int derivative_test_soft_sign() {
-    if (!iszero(soft_sign_derivative(-1))) {
+    if (!is_zero(soft_sign_derivative(-1))) {
         printf("test for soft_sign has failed\n");
         return 1;
     }
-    if (!iszero(soft_sign_derivative(0)-1)) {
+    if (!is_zero(soft_sign_derivative(0)-1)) {
         printf("test for soft_sign has failed\n");
         return 1;
     }
-    if (!iszero(soft_sign_derivative(1)-0.5)) {
+    if (!is_zero(soft_sign_derivative(1)-0.5)) {
         printf("test for soft_sign has failed\n");
         return 1;
     }
@@ -193,17 +181,14 @@ double invsqrt_derivative(double x, double alpha) {
     return 1/sqrt(y);
 }
 
-bool iszero(double x) {
-    return fabs(x) < 1e-9;
-}
 ///Tests
 int tests() {
     printf("tests ...\n");
-    if (!iszero(invsqrt(0.0, 0.0))) {
+    if (!is_zero(invsqrt(0.0, 0.0))) {
         printf("invsqrt(0.0, 0.0) != 0\n");
         return 1;
     }
-    if (!iszero(invsqrt(1.0, 3.0)-0.5)) {
+    if (!is_zero(invsqrt(1.0, 3.0)-0.5)) {
         printf("invsqrt(1.0, 3.0) != 0.5\n");
         return 1;
     }
@@ -211,7 +196,7 @@ int tests() {
         printf("invsqrt(-1.0, -5.0) != nan\n");
         return 1;
     }
-    if (!iszero(invsqrt_derivative(0.0, 0.0)-1.0)) {
+    if (!is_zero(invsqrt_derivative(0.0, 0.0)-1.0)) {
         printf("invsqrt_derivative(0.0, 0.0) != 1\n");
     }
     if (!isnan(invsqrt_derivative(1.0, -3.0))) {}
